@@ -13,4 +13,6 @@ build:
 ```bash
 cd godot-cpp/
 scons platform=linux target=debug generate_bindings=yes -j16
+cd ..
+scons target=debug -j16
 ```
