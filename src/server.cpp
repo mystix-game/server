@@ -29,19 +29,24 @@ Server::~Server()
 
 void Server::start_server()
 {
-    /* TODO fix callable dying
+    // TODO
     int port = 4242;
     UtilityFunctions::print("starting server");
 
-    UtilityFunctions::print(get_multiplayer()->is_server());
-    
     ENetMultiplayerPeer *peer = new ENetMultiplayerPeer();
-    get_multiplayer()->connect("peer_connected", Callable(this, "player_connected"));
-    peer->create_server(port);
-    get_multiplayer()->set_multiplayer_peer(peer);
+    UtilityFunctions::print("test1");
 
-    UtilityFunctions::print(get_multiplayer()->is_server());
-    */
+    Ref<MultiplayerAPI> multiplayer = get_multiplayer();
+    CRASH_COND(multiplayer.is_null());
+
+    multiplayer->connect("peer_connected", Callable(this, "player_connected"));
+
+
+    UtilityFunctions::print("test2");
+//    peer->create_server(port);
+//    mulltiplayer->set_multiplayer_peer(peer);
+//    UtilityFunctions::print(get_multiplayer()->is_server());
+ 
 }
 
 void Server::player_connected(int id)

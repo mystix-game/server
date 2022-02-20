@@ -3,7 +3,7 @@ extends Server
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	test_func()
-	self.start_server()
+	start_server()
 	
 	pass # Replace with function body.
 
