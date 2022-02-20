@@ -2,8 +2,9 @@ extends Server
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var server = Server.new()
-	server.test_func()
+	test_func()
+	self.start_server()
+	
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

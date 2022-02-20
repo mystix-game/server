@@ -9,6 +9,7 @@
 
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/classes/global_constants.hpp>
+#include <godot_cpp/classes/multiplayer_api.hpp>
 
 #include <godot_cpp/core/binder_common.hpp>
 
@@ -23,10 +24,12 @@ protected:
 
 private:
 public:
+    void start_server();
+    void player_connected(int id);
+    void test_func();
+
     Server();
     ~Server();
-
-    void test_func();
 };
 
 #endif // ! SERVER_CLASS_H
