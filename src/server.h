@@ -24,7 +24,7 @@ protected:
 
 private:
 public:
-    void start_server();
+    void start_server(int port);
     void player_connected(int id);
     void test_func();
 

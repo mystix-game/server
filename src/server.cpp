@@ -1,12 +1,10 @@
 #include "server.h"
 
 #include <godot_cpp/core/class_db.hpp>
-
 #include <godot_cpp/classes/node.hpp>
-#include <godot_cpp/classes/global_constants.hpp>
-#include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/e_net_multiplayer_peer.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
+#include <player.h>
 
 using namespace godot;
 
@@ -19,42 +17,31 @@ void Server::_bind_methods()
 
 Server::Server()
 {
-    UtilityFunctions::print("constructor");
+    UtilityFunctions::print("server constructor");
 }
 
 Server::~Server()
 {
-    UtilityFunctions::print("destructor");
+    UtilityFunctions::print("server destructor");
 }
 
-void Server::start_server()
+void Server::start_server(int port)
 {
-    // TODO
-    int port = 4242;
-    UtilityFunctions::print("starting server");
-
-    ENetMultiplayerPeer *peer = new ENetMultiplayerPeer();
-    UtilityFunctions::print("test1");
-
+    auto *peer = new ENetMultiplayerPeer();
     Ref<MultiplayerAPI> multiplayer = get_multiplayer();
     CRASH_COND(multiplayer.is_null());
-
     multiplayer->connect("peer_connected", Callable(this, "player_connected"));
-
-
-    UtilityFunctions::print("test2");
-//    peer->create_server(port);
-//    mulltiplayer->set_multiplayer_peer(peer);
-//    UtilityFunctions::print(get_multiplayer()->is_server());
- 
+    peer->create_server(port);
+    multiplayer->set_multiplayer_peer(peer);
 }
 
-void Server::player_connected(int id)
-{
-    UtilityFunctions::print("player connected" + id);
+void Server::player_connected(int id) {
+    UtilityFunctions::print("player connected: ", id);
+    auto *player = new Player();
+    player->test_func();
 }
 
 void Server::test_func()
 {
-    UtilityFunctions::print("test func called");
+    UtilityFunctions::print("server test func called");
 }
