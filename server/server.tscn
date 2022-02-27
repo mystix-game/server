@@ -13,7 +13,7 @@ albedo_color = Color(0.196078, 0.121569, 0.054902, 1)
 material = SubResource( "StandardMaterial3D_g84gx" )
 size = Vector3(100, 1, 100)
 
-[node name="Server" type="Server"]
+[node name="Main" type="Server"]
 script = ExtResource( "1_0et2f" )
 
 [node name="Players" type="MultiplayerSpawner" parent="."]

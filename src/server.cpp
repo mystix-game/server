@@ -7,6 +7,7 @@
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/resource.hpp>
 #include <godot_cpp/classes/multiplayer_spawner.hpp>
+#include <godot_cpp/classes/packed_scene.hpp>
 #include <player.h>
 #include <string>
 
@@ -44,31 +45,44 @@ void Server::start_server(int port)
 
 void Server::player_connected(int id) {
     UtilityFunctions::print("player connected: ", id);
-    //TODO load player from scene instead of player.cpp and add player c++ script to it
-    //Resource res = ResourceLoader::get_singleton->load("player.tscn");
-    //Node3D *player = res->instantiate();
+    //TODO variable wia player_scene und player_path wia @export  variable im gdscript mache, dassma im editor bearbeita kann
+    //TODO add player c++ script to player_scene??
+    //dfrog isch eifach no wia ma position ageh kann und zwar so dasses initial dia position het und nid erst no vu 0,0,0 det heraspickt 
 
-    //or better:  MultiPlayerSpawner Players->spawn() oder _spawn_custom() ?
-    //node Players isch vom typ MultiplayerSpawner und het object zum spawne und dr pfad schu konfiguriert
-    //dfrog isch eifach no wia ma denn position ageh kann und zwar so dasses initial dia position het und nid erst no vu 0,0,0 det heraspickt 
-
-    //NodePath PlayersNodePath = "Players";
-    //MultiplayerSpawner *Players = get_node(PlayersNodePath);
-    //Players->spawn();
+    Node * node = get_node_internal(NodePath("Players"));
+    if(node != NULL) {
+        MultiplayerSpawner * players = cast_to<MultiplayerSpawner>(node);
+        ResourceLoader* relo = ResourceLoader::get_singleton();
+        String player_path = "player.tscn";
+        Ref<PackedScene> res = relo->load(player_path);
+        if (res !=NULL) {
+            Node * player_scene = res->instantiate();
+            player_scene->set_name(String::num(id));
+            players->add_child(player_scene);
+        }
+        else{
+            UtilityFunctions::print(player_path, " not found");
+        }
+    }
+    else{
+        UtilityFunctions::print("Players node not found");
+    }
 
     //De teil do une denn löscha
-    CharacterBody3D *player = new Player();
-    player->set_name(String::num(id));
+    //CharacterBody3D *player = new Player();
+    //player->set_name(String::num(id));
     
-    NodePath PlayersNodePath = "Players";
-    Node *players = get_node_internal(PlayersNodePath);
+    //NodePath PlayersNodePath = "Players";
+    //Node *players = get_node_internal(PlayersNodePath);
 
-    players->add_child(player);
+    //players->add_child(player);
 }
 
 void Server::player_disconnected(int id) {
-     UtilityFunctions::print("player disconnected: ", id);
-     //TODO convert that gdscript: $Players.get_node(str(id)).queue_free()
+    UtilityFunctions::print("player disconnected: ", id);
+    NodePath path = "Players/" + String::num(id);
+    Node * node = get_node_internal(path);
+    node->queue_free();
 }
 
 void Server::test_func()
