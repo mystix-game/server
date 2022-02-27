@@ -6,6 +6,7 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/resource.hpp>
+#include <godot_cpp/classes/multiplayer_spawner.hpp>
 #include <player.h>
 #include <string>
 
@@ -47,6 +48,15 @@ void Server::player_connected(int id) {
     //Resource res = ResourceLoader::get_singleton->load("player.tscn");
     //Node3D *player = res->instantiate();
 
+    //or better:  MultiPlayerSpawner Players->spawn() oder _spawn_custom() ?
+    //node Players isch vom typ MultiplayerSpawner und het object zum spawne und dr pfad schu konfiguriert
+    //dfrog isch eifach no wia ma denn position ageh kann und zwar so dasses initial dia position het und nid erst no vu 0,0,0 det heraspickt 
+
+    //NodePath PlayersNodePath = "Players";
+    //MultiplayerSpawner *Players = get_node(PlayersNodePath);
+    //Players->spawn();
+
+    //De teil do une denn löscha
     CharacterBody3D *player = new Player();
     player->set_name(String::num(id));
     
