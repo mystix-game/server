@@ -23,6 +23,7 @@ Download and build server:
 ```bash
 #Download
 git clone https://github.com/mystix-game/server.git
+cd server
 git submodule update --init --recursive
 
 #Build
