@@ -24,15 +24,15 @@ protected:
 
 private:
 public:
+
+    Server();
+    ~Server();
+
     void start_server(int port);
     void player_connected(int id);
     void player_disconnected(int id);
     void spawn_player(int id);
     void load_world();
-    void test_func();
-
-    Server();
-    ~Server();
 };
 
 #endif // ! SERVER_CLASS_H

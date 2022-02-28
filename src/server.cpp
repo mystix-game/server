@@ -14,7 +14,6 @@ using namespace godot;
 
 void Server::_bind_methods()
 {
-    ClassDB::bind_method(D_METHOD("test_func"), &Server::test_func);
     ClassDB::bind_method(D_METHOD("start_server"), &Server::start_server);
     ClassDB::bind_method(D_METHOD("player_connected"), &Server::player_connected);
     ClassDB::bind_method(D_METHOD("player_disconnected"), &Server::player_disconnected);
@@ -50,6 +49,7 @@ void Server::player_connected(int id) {
 
 void Server::player_disconnected(int id) {
     UtilityFunctions::print("player disconnected: ", id);
+    UtilityFunctions::print("free player: ", id);
     Node * node = get_node_internal(NodePath("Players/" + String::num(id)));
     node->queue_free();
 }
@@ -94,9 +94,4 @@ void Server::load_world()
         else{
             UtilityFunctions::print(world_path, " not found");
         }
-}
-
-void Server::test_func()
-{
-    UtilityFunctions::print("server test func called");
 }

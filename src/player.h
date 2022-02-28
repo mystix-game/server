@@ -25,6 +25,13 @@ private:
     int synced_health = 100;
     int synced_mana = 100;
 public:
+
+    Player();
+    ~Player();
+
+    void _init(); // our initializer called by Godot
+    void _physics_process(float delta);
+
     Vector3 get_synced_position();
     void set_synced_position(Vector3);
 
@@ -43,11 +50,6 @@ public:
     int get_synced_mana();
     void set_synced_mana(int);
 
-    void test_func();
-
-    Player();
-    ~Player();
 };
-
 
 #endif //SERVER_PLAYER_H

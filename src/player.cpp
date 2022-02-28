@@ -2,12 +2,13 @@
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
+#include <string>
 
 using namespace godot;
 
 void Player::_bind_methods()
 {
-    ClassDB::bind_method(D_METHOD("test_func"), &Player::test_func);
+    ClassDB::bind_method(D_METHOD("_pysics_process"), &Player::_physics_process);
 
     //gdscript @export equivalent
     ClassDB::bind_method(D_METHOD("get_synced_position"), &Player::get_synced_position);
@@ -37,16 +38,19 @@ void Player::_bind_methods()
 }
 
 Player::Player() {
-    UtilityFunctions::print("player constructor");
+    //UtilityFunctions::print("player constructor");
 }
 
 Player::~Player() {
-    UtilityFunctions::print("player destructor");
+    //UtilityFunctions::print("player destructor");
 }
 
-void Player::test_func()
-{
-    UtilityFunctions::print("player test func called");
+void Player::_init() {
+    //UtilityFunctions::print("player _init()");
+}
+
+void Player::_physics_process(float delta) {
+    //UtilityFunctions::print("Delta: ", String::num(delta));
 }
 
 Vector3 Player::get_synced_position() { return synced_position; }
