@@ -60,6 +60,7 @@ mesh = SubResource( "BoxMesh_ks4sv" )
 skeleton = NodePath("")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("..")
 resource = SubResource( "SceneReplicationConfig_6ilqh" )
 
 [node name="Inputs" type="Node" parent="."]
