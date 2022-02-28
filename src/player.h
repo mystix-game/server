@@ -29,7 +29,6 @@ public:
     Player();
     ~Player();
 
-    void _init(); // our initializer called by Godot
     void _physics_process(float delta);
 
     Vector3 get_synced_position();

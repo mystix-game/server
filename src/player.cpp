@@ -45,11 +45,8 @@ Player::~Player() {
     //UtilityFunctions::print("player destructor");
 }
 
-void Player::_init() {
-    //UtilityFunctions::print("player _init()");
-}
-
 void Player::_physics_process(float delta) {
+    //Why does this always print even if player isnt connected and instantiated yet?
     //UtilityFunctions::print("Delta: ", String::num(delta));
 }
 
