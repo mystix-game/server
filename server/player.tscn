@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://5wel8gkauif0"]
+[gd_scene load_steps=7 format=3 uid="uid://5wel8gkauif0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e1cx4"]
 albedo_color = Color(0.341176, 0.564706, 1, 1)
@@ -11,16 +11,58 @@ material = SubResource( "StandardMaterial3D_e1cx4" )
 [sub_resource type="BoxMesh" id="BoxMesh_ks4sv"]
 size = Vector3(0.8, 0.2, 0.3)
 
-[node name="Player" type="Node3D"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6ilqh"]
+properties/0/path = NodePath(":synced_position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(":synced_rotation_y")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath(":synced_camera_arm_rotation_x")
+properties/2/spawn = true
+properties/2/sync = true
+properties/3/path = NodePath(":synced_player_name")
+properties/3/spawn = true
+properties/3/sync = false
+properties/4/path = NodePath(":synced_health")
+properties/4/spawn = true
+properties/4/sync = true
+properties/5/path = NodePath(":synced_mana")
+properties/5/spawn = true
+properties/5/sync = true
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_khrhy"]
+properties/0/path = NodePath(":motion")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(":mouseDelta")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath(":jump")
+properties/2/spawn = true
+properties/2/sync = true
+properties/3/path = NodePath(":shoot")
+properties/3/spawn = true
+properties/3/sync = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource( "CapsuleMesh_3es45" )
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource( "CapsuleShape3D_2vae6" )
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="CharacterBody3D"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.4)
 mesh = SubResource( "BoxMesh_ks4sv" )
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("..")
+resource = SubResource( "SceneReplicationConfig_6ilqh" )
+
+[node name="Inputs" type="Node" parent="."]
+
+[node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="Inputs"]
+root_path = NodePath("..")
+resource = SubResource( "SceneReplicationConfig_khrhy" )
