@@ -46,6 +46,7 @@ properties/3/spawn = true
 properties/3/sync = true
 
 [node name="Player" type="Player"]
+synced_camera_arm_rotation_x = 2.48906e-40
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource( "CapsuleMesh_3es45" )
