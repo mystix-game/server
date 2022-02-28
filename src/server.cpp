@@ -56,9 +56,7 @@ void Server::player_disconnected(int id) {
 
 void Server::spawn_player(int id)
 {
-    //TODO variable wia player_scene und player_path wia @export  variable im gdscript mache, dassma im editor bearbeita kann
-    //TODO add player c++ script to player_scene??
-    //dfrog isch eifach no wia ma position ageh kann und zwar so dasses initial dia position het und nid erst no vu 0,0,0 det heraspickt 
+    //TODO @export var port, spawn_path, player_scene, world_scene then it will be configurable from editor
 
     UtilityFunctions::print("spawn player: ", id);
     Node * node = get_node_internal(NodePath("Players"));
