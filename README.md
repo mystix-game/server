@@ -1,5 +1,5 @@
 # server
-
+This is a Godot 4 alpha authoritative server written in c++
 
 ## start
 
