@@ -7,12 +7,14 @@
 #include <godot_cpp/godot.hpp>
 
 #include "server.h"
+#include "player.h"
 
 using namespace godot;
 
 void register_cpp_server_types()
 {
 	ClassDB::register_class<Server>();
+	ClassDB::register_class<Player>();
 }
 
 void unregister_cpp_server_types() {}

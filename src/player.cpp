@@ -15,7 +15,7 @@ Player::Player() {
 }
 
 Player::~Player() {
-    UtilityFunctions::print("server destructor");
+    UtilityFunctions::print("player destructor");
 }
 
 void Player::test_func()
