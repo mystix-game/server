@@ -5,12 +5,10 @@
 #include <godot_cpp/classes/e_net_multiplayer_peer.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
-#include <godot_cpp/classes/resource.hpp>
 #include <godot_cpp/classes/multiplayer_spawner.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <player.h>
 #include <string>
-
 
 using namespace godot;
 
@@ -24,16 +22,17 @@ void Server::_bind_methods()
 
 Server::Server()
 {
-    UtilityFunctions::print("server constructor");
+    //UtilityFunctions::print("server constructor");
 }
 
 Server::~Server()
 {
-    UtilityFunctions::print("server destructor");
+    //UtilityFunctions::print("server destructor");
 }
 
 void Server::start_server(int port)
 {
+    UtilityFunctions::print("starting server");
     auto *peer = new ENetMultiplayerPeer();
     Ref<MultiplayerAPI> multiplayer = get_multiplayer();
     CRASH_COND(multiplayer.is_null());
@@ -41,14 +40,27 @@ void Server::start_server(int port)
     multiplayer->connect("peer_disconnected", Callable(this, "player_disconnected"));
     peer->create_server(port);
     multiplayer->set_multiplayer_peer(peer);
+    load_world();
 }
 
 void Server::player_connected(int id) {
     UtilityFunctions::print("player connected: ", id);
+    spawn_player(id);
+}
+
+void Server::player_disconnected(int id) {
+    UtilityFunctions::print("player disconnected: ", id);
+    Node * node = get_node_internal(NodePath("Players/" + String::num(id)));
+    node->queue_free();
+}
+
+void Server::spawn_player(int id)
+{
     //TODO variable wia player_scene und player_path wia @export  variable im gdscript mache, dassma im editor bearbeita kann
     //TODO add player c++ script to player_scene??
     //dfrog isch eifach no wia ma position ageh kann und zwar so dasses initial dia position het und nid erst no vu 0,0,0 det heraspickt 
 
+    UtilityFunctions::print("spawn player: ", id);
     Node * node = get_node_internal(NodePath("Players"));
     if(node != NULL) {
         MultiplayerSpawner * players = cast_to<MultiplayerSpawner>(node);
@@ -67,22 +79,21 @@ void Server::player_connected(int id) {
     else{
         UtilityFunctions::print("Players node not found");
     }
-
-    //De teil do une denn löscha
-    //CharacterBody3D *player = new Player();
-    //player->set_name(String::num(id));
-    
-    //NodePath PlayersNodePath = "Players";
-    //Node *players = get_node_internal(PlayersNodePath);
-
-    //players->add_child(player);
 }
 
-void Server::player_disconnected(int id) {
-    UtilityFunctions::print("player disconnected: ", id);
-    NodePath path = "Players/" + String::num(id);
-    Node * node = get_node_internal(path);
-    node->queue_free();
+void Server::load_world()
+{
+    UtilityFunctions::print("loading world");
+    ResourceLoader* relo = ResourceLoader::get_singleton();
+    String world_path = "world.tscn";
+        Ref<PackedScene> res = relo->load(world_path);
+        if (res !=NULL) {
+            Node * world_scene = res->instantiate();
+            add_child(world_scene);
+        }
+        else{
+            UtilityFunctions::print(world_path, " not found");
+        }
 }
 
 void Server::test_func()
