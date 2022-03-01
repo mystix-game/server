@@ -3,7 +3,7 @@ This is a Godot 4 alpha authoritative server written in c++
 
 ## Get started
 
-Download and build Godot 4 master branch:
+### Download and build Godot 4 master branch:
 ```bash
 #Install build dependencies
 sudo apt-get install build-essential scons pkg-config libx11-dev libxcursor-dev libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libudev-dev libxi-dev libxrandr-dev yasm
@@ -19,7 +19,7 @@ scons -j16 platform=linuxbsd
 scons -j16 platform=x11 tools=no target=release_debug bits=64
 ```
 
-Download and build server:
+### Download and build server:
 ```bash
 #Download
 git clone https://github.com/mystix-game/server.git
@@ -33,4 +33,13 @@ cd ..
 scons target=debug -j16
 ```
 
+
+### Start Godot 4:
+godot/bin folder
+
+### Import server project:
+server/server/project.godot
+
+### Gdscript Client until c++ version is ready:
+https://github.com/MystixCode/Godot4Net
 
