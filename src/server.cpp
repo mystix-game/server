@@ -7,7 +7,6 @@
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/multiplayer_spawner.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
-#include <player.h>
 #include <string>
 
 using namespace godot;

@@ -46,7 +46,6 @@ Player::~Player() {
 }
 
 void Player::_physics_process(float delta) {
-    //Why does this always print even if player isnt connected and instantiated yet?
     //UtilityFunctions::print("Delta: ", String::num(delta));
 }
 
