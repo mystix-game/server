@@ -63,7 +63,7 @@ skeleton = NodePath("")
 root_path = NodePath("..")
 resource = SubResource( "SceneReplicationConfig_6ilqh" )
 
-[node name="Inputs" type="Node" parent="."]
+[node name="Inputs" type="Inputs" parent="."]
 
 [node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="Inputs"]
 root_path = NodePath("..")

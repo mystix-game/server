@@ -8,6 +8,7 @@
 
 #include "server.h"
 #include "player.h"
+#include "inputs.h"
 
 using namespace godot;
 
@@ -15,6 +16,7 @@ void register_cpp_server_types()
 {
 	ClassDB::register_class<Server>();
 	ClassDB::register_class<Player>();
+	ClassDB::register_class<Inputs>();
 }
 
 void unregister_cpp_server_types() {}
