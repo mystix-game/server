@@ -35,7 +35,7 @@ scons target=debug -j16
 
 
 ### Start Godot 4:
-godot/bin folder
+godot/bin/godot.linuxbsd.tools.64
 
 ### Import server project:
 server/server/project.godot
