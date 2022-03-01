@@ -69,6 +69,8 @@ void Server::spawn_player(int id)
         if (res !=NULL) {
             Node * player_scene = res->instantiate();
             player_scene->set_name(String::num(id));
+            //Set authority to client for Inputs
+            player_scene->get_node_internal(NodePath("Inputs"))->set_multiplayer_authority(id);
             players->add_child(player_scene);
         }
         else{

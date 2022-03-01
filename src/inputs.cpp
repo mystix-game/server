@@ -5,8 +5,6 @@
 
 #include <godot_cpp/classes/character_body3d.hpp>
 
-
-
 using namespace godot;
 
 void Inputs::_bind_methods()
@@ -25,7 +23,7 @@ void Inputs::_bind_methods()
     ClassDB::bind_method(D_METHOD("set_jump", "jump"),  &Inputs::set_jump);
     ADD_PROPERTY(PropertyInfo(Variant::BOOL, "jump"), "set_jump", "get_jump");
 
-    ClassDB::bind_method(D_METHOD("get_shoot"), &Inputs::get_jump);
+    ClassDB::bind_method(D_METHOD("get_shoot"), &Inputs::get_shoot);
     ClassDB::bind_method(D_METHOD("set_shoot", "shoot"),  &Inputs::set_shoot);
     ADD_PROPERTY(PropertyInfo(Variant::BOOL, "shoot"), "set_shoot", "get_shoot");
 
@@ -34,10 +32,6 @@ void Inputs::_bind_methods()
 Inputs::Inputs() {
     //UtilityFunctions::print("inputs constructor");
 
-    //TODO convert that godot::string to int
-    //StringName player_name = get_parent()->get_name();
-    //int id = String::to_int(player_name);
-    //set_multiplayer_authority(id);
 }
 
 Inputs::~Inputs() {
