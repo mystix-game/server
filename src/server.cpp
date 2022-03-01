@@ -17,6 +17,8 @@ void Server::_bind_methods()
     ClassDB::bind_method(D_METHOD("start_server"), &Server::start_server);
     ClassDB::bind_method(D_METHOD("player_connected"), &Server::player_connected);
     ClassDB::bind_method(D_METHOD("player_disconnected"), &Server::player_disconnected);
+    ClassDB::bind_method(D_METHOD("spawn_player"), &Server::spawn_player);
+    ClassDB::bind_method(D_METHOD("load_world"), &Server::load_world);
 }
 
 Server::Server()
