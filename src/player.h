@@ -24,6 +24,9 @@ private:
     String synced_player_name;
     int synced_health = 100;
     int synced_mana = 100;
+
+    float gravity = 9.8;
+    float jump_force = 4.5;
 public:
 
     Player();

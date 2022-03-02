@@ -19,8 +19,8 @@ protected:
 private:
     Vector2 motion;
     Vector2 mouse_motion;
-    bool jump;
-    bool shoot;
+    bool jump = false;
+    bool shoot = false;
 public:
 
     Inputs();

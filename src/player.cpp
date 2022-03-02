@@ -3,6 +3,7 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 //#include <string>
+#include <inputs.h>
 
 using namespace godot;
 
@@ -39,6 +40,12 @@ void Player::_bind_methods()
 
 Player::Player() {
     //UtilityFunctions::print("player constructor");
+    
+    
+
+    //TODO
+    //if multiplayer.multiplayer_peer == null or str(multiplayer.get_unique_id()) == str(name):
+	//camera.current = true
 }
 
 Player::~Player() {
@@ -47,6 +54,53 @@ Player::~Player() {
 
 void Player::_physics_process(float delta) {
     //UtilityFunctions::print("Delta: ", String::num(delta));
+
+    //TODO
+	//synced_position = position
+	//synced_rotation_y = rotation.y
+
+	//var rot : Vector3 = Vector3($"Inputs".mouse_motion.y, $"Inputs".mouse_motion.x, 0) * mouse_sensitivity * delta
+	//$"Inputs".mouse_motion = Vector2()
+	
+	//$CameraArm.rotation.x-= rot.x
+	//synced_camera_arm_rotation_x = $CameraArm.rotation.x
+	//$CameraArm.rotation.x = clamp(rotation.x, -90.0, 30.0) #TODO: limit camera rotation up/down, new Vector3.limit_lengthfunction ?
+	//rotation.y -= rot.y
+	
+	//# Add the gravity.
+//    if(is_on_floor() == false)
+//    {
+//        Vector3 vel = get_velocity();
+//        vel.y = vel.y - gravity * delta;
+//        set_motion_velocity(vel);
+//    }
+	//if not is_on_floor():
+	//	velocity.y -= gravity * delta
+
+	//#Handle Jump.
+//    Inputs * inputs = get_node<Inputs>(NodePath("Inputs"));
+//    if (inputs->get_jump()) {
+//        Vector3 vel = get_velocity();
+//        vel.y = jump_force;
+//        set_velocity(vel);
+//    }
+	//if $Inputs.jump == true and is_on_floor():
+	//	velocity.y = jump_force
+	//	synced_mana-=10
+
+	//#Handle Shoot
+	//if $Inputs.shoot == true:
+	//	get_node("../../Bullets").spawn([$"Position3D".global_transform.origin, str(name).to_int()])
+
+	//var direction := (transform.basis * Vector3($Inputs.motion.y, 0, $Inputs.motion.x)).normalized()
+	//if direction:
+	//	velocity.x = direction.x * speed
+	//	velocity.z = direction.z * speed
+	//else:
+	//	velocity.x = move_toward(velocity.x, 0, speed)
+	//	velocity.z = move_toward(velocity.z, 0, speed)
+
+	move_and_slide();
 }
 
 Vector3 Player::get_synced_position() { return synced_position; }
