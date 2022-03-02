@@ -1,4 +1,7 @@
 extends Server
 
 func _ready():
-	start_server(4242)
+	#set_port(4246)
+	#set_world_path("world2.tscn")
+	#set_player_path("player2.tscn")
+	start_server()

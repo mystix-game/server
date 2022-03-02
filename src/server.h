@@ -23,16 +23,28 @@ protected:
     static void _bind_methods();
 
 private:
+    int port = 4242;
+    String world_path = "world.tscn";
+    String player_path = "player.tscn";
 public:
 
     Server();
     ~Server();
 
-    void start_server(int port);
+    void start_server();
     void player_connected(int id);
     void player_disconnected(int id);
     void spawn_player(int id);
     void load_world();
+
+    int get_port();
+    void set_port(int);
+
+    String get_world_path();
+    void set_world_path(String);
+
+    String get_player_path();
+    void set_player_path(String);
 };
 
 #endif // ! SERVER_CLASS_H
