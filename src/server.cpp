@@ -47,12 +47,15 @@ void Server::start_server()
 {
     UtilityFunctions::print("starting server");
     auto *peer = new ENetMultiplayerPeer();
+
+    //TODO here comes the first error: "_instance_bindings != nullptr" is true
     Ref<MultiplayerAPI> multiplayer = get_multiplayer();
     CRASH_COND(multiplayer.is_null());
     multiplayer->connect("peer_connected", Callable(this, "player_connected"));
     multiplayer->connect("peer_disconnected", Callable(this, "player_disconnected"));
     peer->create_server(port);
     multiplayer->set_multiplayer_peer(peer);
+    //TODO in load world come the next 3 same errors.. but its kinda working
     load_world();
 }
 
@@ -75,7 +78,6 @@ void Server::spawn_player(int id)
     if(node != NULL) {
         MultiplayerSpawner * players = cast_to<MultiplayerSpawner>(node);
         ResourceLoader* relo = ResourceLoader::get_singleton();
-        //String player_path = "player.tscn";
         Ref<PackedScene> res = relo->load(player_path);
         if (res !=NULL) {
             Node * player = res->instantiate();
@@ -99,7 +101,6 @@ void Server::load_world()
 {
     UtilityFunctions::print("loading world");
     ResourceLoader* relo = ResourceLoader::get_singleton();
-    //String world_path = "world.tscn";
     Ref<PackedScene> res = relo->load(world_path);
     if (res !=NULL) {
         Node * world = res->instantiate();

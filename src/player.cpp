@@ -41,7 +41,8 @@ void Player::_bind_methods()
 Player::Player() {
     //UtilityFunctions::print("player constructor");
     
-    
+	//Vector3(randi_range(-3,3), 5, randi_range(-3,3))
+    set_position(Vector3(0,5,0));
 
     //TODO
     //if multiplayer.multiplayer_peer == null or str(multiplayer.get_unique_id()) == str(name):
