@@ -5,6 +5,7 @@
 //#include <string>
 #include <inputs.h>
 
+
 using namespace godot;
 
 void Player::_bind_methods()
@@ -45,6 +46,10 @@ Player::Player() {
     set_position(Vector3(0,10,0));
 
     //TODO
+ //   SpringArm3D camera_arm = get_node<SpringArm3D>(NodePath("CameraArm"));
+//    camera = get_node<Camera3D>(NodePath("CameraArm/Camera3D"));
+    
+    //Camera3D * camera = cast_to<Camera3D>(nodeddd);
     //if multiplayer.multiplayer_peer == null or str(multiplayer.get_unique_id()) == str(name):
 	//camera.current = true
 }
@@ -64,6 +69,9 @@ void Player::_physics_process(float delta) {
 	Vector3 rot = Vector3(inputs->get_mouse_motion().y, inputs->get_mouse_motion().x, 0) * mouse_sensitivity * delta;
     inputs->set_mouse_motion(Vector2());
 	
+    //Vector3 rot2 = camera_arm->get_rotation();
+    //rot2.x = rot2.x - rot.x;
+    //camera_arm->set_rotation(rot2);
 	//$CameraArm.rotation.x-= rot.x
 	//synced_camera_arm_rotation_x = $CameraArm.rotation.x
 	//$CameraArm.rotation.x = clamp(rotation.x, -90.0, 30.0) #TODO: limit camera rotation up/down, new Vector3.limit_lengthfunction ?
@@ -80,7 +88,7 @@ void Player::_physics_process(float delta) {
         set_motion_velocity(vel);
     }
     //#Handle Jump.
-    if (inputs->get_jump()) {
+    if (inputs->get_jump() == true) {
         Vector3 vel = get_motion_velocity();
         vel.y = jump_force;
         set_motion_velocity(vel);

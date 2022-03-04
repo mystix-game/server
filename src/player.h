@@ -7,6 +7,9 @@
 
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/core/binder_common.hpp>
+#include <godot_cpp/classes/spring_arm3d.hpp>
+#include <godot_cpp/classes/camera3d.hpp>
+#include <godot_cpp/classes/node.hpp>
 
 using namespace godot;
 
@@ -27,8 +30,9 @@ private:
 
     float gravity = 9.8;
     float jump_force = 4.5;
-    float mouse_sensitivity= 2;
-    float speed=5.0;
+    float mouse_sensitivity = 2;
+    float speed = 5.0;
+    //SpringArm3D * camera_arm = get_node<SpringArm3D>(NodePath("CameraArm"));
 public:
 
     Player();

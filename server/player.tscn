@@ -59,6 +59,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.4)
 mesh = SubResource( "BoxMesh_ks4sv" )
 skeleton = NodePath("")
 
+[node name="CameraArm" type="SpringArm3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraArm"]
+h_offset = 1.0
+v_offset = 1.5
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath("..")
 resource = SubResource( "SceneReplicationConfig_6ilqh" )
