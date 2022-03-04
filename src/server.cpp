@@ -49,14 +49,16 @@ void Server::start_server()
     auto *peer = new ENetMultiplayerPeer();
 
     //TODO here comes the first error: "_instance_bindings != nullptr" is true
+    // in /core/object/object.cpp   -->   https://github.com/godotengine/godot/blob/3f69ea4f3bcb4f234f6e62909a79bdee221608a9/core/object/object.cpp#L1776
     Ref<MultiplayerAPI> multiplayer = get_multiplayer();
     CRASH_COND(multiplayer.is_null());
-    multiplayer->connect("peer_connected", Callable(this, "player_connected"));
-    multiplayer->connect("peer_disconnected", Callable(this, "player_disconnected"));
-    peer->create_server(port);
-    multiplayer->set_multiplayer_peer(peer);
+    //multiplayer->connect("peer_connected", Callable(this, "player_connected"));
+    //multiplayer->connect("peer_disconnected", Callable(this, "player_disconnected"));
+    //peer->create_server(port);
+    //multiplayer->set_multiplayer_peer(peer);
+
     //TODO in load world come the next 3 same errors.. but its kinda working
-    load_world();
+    //load_world();
 }
 
 void Server::player_connected(int id) {

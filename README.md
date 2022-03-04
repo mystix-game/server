@@ -1,6 +1,8 @@
 # server
 This is a Godot 4 alpha authoritative server written in c++
 
+Not working atm its in development.
+
 ## Get started
 
 ### Download and build Godot 4 master branch:
