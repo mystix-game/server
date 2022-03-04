@@ -42,7 +42,7 @@ Player::Player() {
     //UtilityFunctions::print("player constructor");
     
 	//Vector3(randi_range(-3,3), 5, randi_range(-3,3))
-    set_position(Vector3(0,5,0));
+    set_position(Vector3(0,10,0));
 
     //TODO
     //if multiplayer.multiplayer_peer == null or str(multiplayer.get_unique_id()) == str(name):
@@ -56,44 +56,49 @@ Player::~Player() {
 void Player::_physics_process(float delta) {
     //UtilityFunctions::print("Delta: ", String::num(delta));
 
-    //TODO
-	//synced_position = position
-	//synced_rotation_y = rotation.y
+	Inputs * inputs = get_node<Inputs>(NodePath("Inputs"));
+	synced_position = get_position();
+	Vector3 rotation = get_rotation();
+	synced_rotation_y = rotation.y;
 
-	//var rot : Vector3 = Vector3($"Inputs".mouse_motion.y, $"Inputs".mouse_motion.x, 0) * mouse_sensitivity * delta
-	//$"Inputs".mouse_motion = Vector2()
+	Vector3 rot = Vector3(inputs->get_mouse_motion().y, inputs->get_mouse_motion().x, 0) * mouse_sensitivity * delta;
+    inputs->set_mouse_motion(Vector2());
 	
 	//$CameraArm.rotation.x-= rot.x
 	//synced_camera_arm_rotation_x = $CameraArm.rotation.x
 	//$CameraArm.rotation.x = clamp(rotation.x, -90.0, 30.0) #TODO: limit camera rotation up/down, new Vector3.limit_lengthfunction ?
-	//rotation.y -= rot.y
+	
+	Vector3 tmprot;
+	tmprot.y = rotation.y - rot.y;
+	set_rotation(tmprot);
 	
 	//# Add the gravity.
-//    if(is_on_floor() == false)
-//    {
-//        Vector3 vel = get_velocity();
-//        vel.y = vel.y - gravity * delta;
-//        set_motion_velocity(vel);
-//    }
-	//if not is_on_floor():
-	//	velocity.y -= gravity * delta
-
-	//#Handle Jump.
-//    Inputs * inputs = get_node<Inputs>(NodePath("Inputs"));
-//    if (inputs->get_jump()) {
-//        Vector3 vel = get_velocity();
-//        vel.y = jump_force;
-//        set_velocity(vel);
-//    }
-	//if $Inputs.jump == true and is_on_floor():
-	//	velocity.y = jump_force
-	//	synced_mana-=10
-
+    if(is_on_floor() == false)
+    {
+        Vector3 vel = get_motion_velocity();
+        vel.y = vel.y - gravity * delta;
+        set_motion_velocity(vel);
+    }
+    //#Handle Jump.
+    if (inputs->get_jump()) {
+        Vector3 vel = get_motion_velocity();
+        vel.y = jump_force;
+        set_motion_velocity(vel);
+        synced_mana = synced_mana - 10;
+        UtilityFunctions::print("synced_mana: ", synced_mana);
+    }
 	//#Handle Shoot
 	//if $Inputs.shoot == true:
 	//	get_node("../../Bullets").spawn([$"Position3D".global_transform.origin, str(name).to_int()])
 
+
+	Basis direction = (get_transform().basis * Vector3(inputs->get_motion().y, 0, inputs->get_motion().x)).orthonormalized();
+    //TODO
 	//var direction := (transform.basis * Vector3($Inputs.motion.y, 0, $Inputs.motion.x)).normalized()
+	if (direction != Basis()) {
+        Vector3 tmp_vel = Vector3(direction.get_rotation_quat().x * speed, 0, direction.get_rotation_quat().z * speed);
+		set_motion_velocity(tmp_vel);
+	}
 	//if direction:
 	//	velocity.x = direction.x * speed
 	//	velocity.z = direction.z * speed

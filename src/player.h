@@ -27,6 +27,8 @@ private:
 
     float gravity = 9.8;
     float jump_force = 4.5;
+    float mouse_sensitivity= 2;
+    float speed=5.0;
 public:
 
     Player();
@@ -35,22 +37,22 @@ public:
     void _physics_process(float delta);
 
     Vector3 get_synced_position();
-    void set_synced_position(Vector3);
+    void set_synced_position(Vector3 _synced_position);
 
     float get_synced_rotation_y();
-    void set_synced_rotation_y(float);
+    void set_synced_rotation_y(float _synced_rotation_y);
 
     float get_synced_camera_arm_rotation_x();
-    void set_synced_camera_arm_rotation_x(float);
+    void set_synced_camera_arm_rotation_x(float _synced_camera_arm_rotation_x);
 
     String get_synced_player_name();
-    void set_synced_player_name(String);
+    void set_synced_player_name(String _synced_player_name);
 
     int get_synced_health();
-    void set_synced_health(int);
+    void set_synced_health(int _synced_health);
 
     int get_synced_mana();
-    void set_synced_mana(int);
+    void set_synced_mana(int _synced_mana);
 
 };
 

@@ -38,13 +38,13 @@ public:
     void load_world();
 
     int get_port();
-    void set_port(int);
+    void set_port(int _port);
 
     String get_world_path();
-    void set_world_path(String);
+    void set_world_path(String _world_path);
 
     String get_player_path();
-    void set_player_path(String);
+    void set_player_path(String _player_path);
 };
 
 #endif // ! SERVER_CLASS_H
