@@ -31,7 +31,7 @@ private:
     float gravity = 9.8;
     float jump_force = 4.5;
     float mouse_sensitivity = 2;
-    float speed = 5.0;
+    float speed = 10;
 public:
 
     Player();

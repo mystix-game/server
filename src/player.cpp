@@ -106,14 +106,14 @@ void Player::_physics_process(float delta) {
     Basis direction = (get_transform().basis * Vector3(inputs->get_motion().y, 0, inputs->get_motion().x)).orthonormalized();
     //TODO
     //var direction := (transform.basis * Vector3($Inputs.motion.y, 0, $Inputs.motion.x)).normalized()
-    if (direction != Basis()) { //probably that if doesnt work like expected
+    if (direction != Basis()) {
         Vector3 tmp_vel = Vector3(direction.get_rotation_quat().x * speed, 0, direction.get_rotation_quat().z * speed);
-        set_motion_velocity(tmp_vel);
+        set_motion_velocity(Vector3(tmp_vel.x, get_motion_velocity().y ,tmp_vel.z));
     }
-//    else {
-//        Vector3 tmp_vel = Vector3(godot::Math::move_toward(get_motion_velocity().x, 0, speed), 0, godot::Math::move_toward(get_motion_velocity().z, 0, speed));
-//        set_motion_velocity(tmp_vel);
-//    }
+    else {
+        Vector3 tmp_vel = Vector3(godot::Math::move_toward(get_motion_velocity().x, 0, speed), 0, godot::Math::move_toward(get_motion_velocity().z, 0, speed));
+        set_motion_velocity(Vector3(tmp_vel.x, get_motion_velocity().y ,tmp_vel.z));
+    }
 
     //if direction:
     //    velocity.x = direction.x * speed
