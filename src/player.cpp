@@ -39,17 +39,8 @@ void Player::_bind_methods()
 
 Player::Player() {
     //UtilityFunctions::print("player constructor");
-    
     //Vector3(randi_range(-3,3), 5, randi_range(-3,3))
     set_position(Vector3(0,10,0));
-
-//TODO
-//    SpringArm3D * camera_arm = get_node<SpringArm3D>(NodePath("CameraArm"));
-//    camera = get_node<Camera3D>(NodePath("CameraArm/Camera3D"));
-    
-    //Camera3D * camera = cast_to<Camera3D>(nodeddd);
-    //if multiplayer.multiplayer_peer == null or str(multiplayer.get_unique_id()) == str(name):
-    //camera.current = true
 }
 
 Player::~Player() {
@@ -62,7 +53,12 @@ void Player::_ready() {
 }
 
 void Player::_physics_process(float delta) {
-    //UtilityFunctions::print("Delta: ", String::num(delta));
+
+    //TODO:
+    //Camera3D * camera = get_node<Camera3D>(NodePath("/CameraArm/Camera3D"));
+    //if multiplayer.multiplayer_peer == null or str(multiplayer.get_unique_id()) == str(name):
+    //camera.current = true
+
     SpringArm3D * camera_arm = get_node<SpringArm3D>(NodePath("CameraArm")); //why doesnt this line work in constructor or _ready()??
     Inputs * inputs = get_node<Inputs>(NodePath("Inputs"));
     synced_position = get_position();
@@ -72,15 +68,15 @@ void Player::_physics_process(float delta) {
     Vector3 rot = Vector3(inputs->get_mouse_motion().y, inputs->get_mouse_motion().x, 0) * mouse_sensitivity * delta;
     inputs->set_mouse_motion(Vector2());
 
-    Vector3 rot2 = camera_arm->get_rotation();
-    rot2.x = rot2.x - rot.x;
+    Vector3 arm_rot = camera_arm->get_rotation();
+    arm_rot.x = arm_rot.x - rot.x;
     //TODO: $CameraArm.rotation.x = clamp(rotation.x, -90.0, 30.0) #TODO: limit camera rotation up/down, new Vector3.limit_lengthfunction ?
-    camera_arm->set_rotation(rot2);
-    synced_camera_arm_rotation_x = rot2.x;
+    camera_arm->set_rotation(arm_rot);
+    synced_camera_arm_rotation_x = arm_rot.x;
     
-    Vector3 tmprot;
-    tmprot.y = rotation.y - rot.y;
-    set_rotation(tmprot);
+    Vector3 player_rot;
+    player_rot.y = rotation.y - rot.y;
+    set_rotation(player_rot);
 
     // Add the gravity.
     if(is_on_floor() == false)
@@ -98,29 +94,21 @@ void Player::_physics_process(float delta) {
         synced_mana = synced_mana - 10;
         UtilityFunctions::print("synced_mana: ", synced_mana);
     }
+
+    //TODO
     //Handle Shoot
     //if $Inputs.shoot == true:
     //    get_node("../../Bullets").spawn([$"Position3D".global_transform.origin, str(name).to_int()])
 
-
     Basis direction = (get_transform().basis * Vector3(inputs->get_motion().y, 0, inputs->get_motion().x)).orthonormalized();
-    //TODO
-    //var direction := (transform.basis * Vector3($Inputs.motion.y, 0, $Inputs.motion.x)).normalized()
     if (direction != Basis()) {
-        Vector3 tmp_vel = Vector3(direction.get_rotation_quat().x * speed, 0, direction.get_rotation_quat().z * speed);
-        set_motion_velocity(Vector3(tmp_vel.x, get_motion_velocity().y ,tmp_vel.z));
+        Vector3 vel = Vector3(direction.get_rotation_quat().x * speed, 0, direction.get_rotation_quat().z * speed);
+        set_motion_velocity(Vector3(vel.x, get_motion_velocity().y, vel.z));
     }
     else {
-        Vector3 tmp_vel = Vector3(godot::Math::move_toward(get_motion_velocity().x, 0, speed), 0, godot::Math::move_toward(get_motion_velocity().z, 0, speed));
-        set_motion_velocity(Vector3(tmp_vel.x, get_motion_velocity().y ,tmp_vel.z));
+        Vector3 vel = Vector3(godot::Math::move_toward(get_motion_velocity().x, 0, speed), 0, godot::Math::move_toward(get_motion_velocity().z, 0, speed));
+        set_motion_velocity(Vector3(vel.x, get_motion_velocity().y, vel.z));
     }
-
-    //if direction:
-    //    velocity.x = direction.x * speed
-    //    velocity.z = direction.z * speed
-    //else:
-    //    velocity.x = move_toward(velocity.x, 0, speed)
-    //    velocity.z = move_toward(velocity.z, 0, speed)
 
     move_and_slide();
 }
