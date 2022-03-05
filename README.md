@@ -39,10 +39,10 @@ scons platform=linux target=debug generate_bindings=yes -j16
 cd ..
 scons target=debug -j16
 ```
-
-
+<!--
 ### Start Godot 4:
 godot/bin/godot.linuxbsd.tools.64
+-->
 
 ### Import server project:
 server/server/project.godot
