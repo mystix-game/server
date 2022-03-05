@@ -38,6 +38,7 @@ public:
     Player();
     ~Player();
 
+    void _ready();
     void _physics_process(float delta);
 
     Vector3 get_synced_position();

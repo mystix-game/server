@@ -10,6 +10,7 @@ using namespace godot;
 
 void Player::_bind_methods()
 {
+    //ClassDB::bind_method(D_METHOD("_ready"), &Player::_ready);
     ClassDB::bind_method(D_METHOD("_pysics_process"), &Player::_physics_process);
 
     //gdscript @export equivalent
@@ -56,6 +57,10 @@ Player::Player() {
 
 Player::~Player() {
     //UtilityFunctions::print("player destructor");
+}
+
+void Player::_ready() {
+    UtilityFunctions::print("_ready()");
 }
 
 void Player::_physics_process(float delta) {
