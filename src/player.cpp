@@ -2,10 +2,7 @@
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
-//#include <string>
 #include <inputs.h>
-
-
 using namespace godot;
 
 void Player::_bind_methods()
@@ -47,7 +44,7 @@ Player::Player() {
     set_position(Vector3(0,10,0));
 
 //TODO
-//    SpringArm3D camera_arm = get_node<SpringArm3D>(NodePath("CameraArm"));
+//    SpringArm3D * camera_arm = get_node<SpringArm3D>(NodePath("CameraArm"));
 //    camera = get_node<Camera3D>(NodePath("CameraArm/Camera3D"));
     
     //Camera3D * camera = cast_to<Camera3D>(nodeddd);
@@ -61,10 +58,12 @@ Player::~Player() {
 
 void Player::_ready() {
     UtilityFunctions::print("_ready()");
+//    SpringArm3D * camera_arm = get_node<SpringArm3D>(NodePath("CameraArm"));
 }
 
 void Player::_physics_process(float delta) {
     //UtilityFunctions::print("Delta: ", String::num(delta));
+    SpringArm3D * camera_arm = get_node<SpringArm3D>(NodePath("CameraArm")); //why doesnt this line work in constructor or _ready()??
     Inputs * inputs = get_node<Inputs>(NodePath("Inputs"));
     synced_position = get_position();
     Vector3 rotation = get_rotation();
@@ -73,13 +72,11 @@ void Player::_physics_process(float delta) {
     Vector3 rot = Vector3(inputs->get_mouse_motion().y, inputs->get_mouse_motion().x, 0) * mouse_sensitivity * delta;
     inputs->set_mouse_motion(Vector2());
 
-    //Vector3 rot2 = camera_arm->get_rotation();
-    //rot2.x = rot2.x - rot.x;
-    //camera_arm->set_rotation(rot2);
-
-    //$CameraArm.rotation.x-= rot.x
-    //synced_camera_arm_rotation_x = $CameraArm.rotation.x
-    //$CameraArm.rotation.x = clamp(rotation.x, -90.0, 30.0) #TODO: limit camera rotation up/down, new Vector3.limit_lengthfunction ?
+    Vector3 rot2 = camera_arm->get_rotation();
+    rot2.x = rot2.x - rot.x;
+    //TODO: $CameraArm.rotation.x = clamp(rotation.x, -90.0, 30.0) #TODO: limit camera rotation up/down, new Vector3.limit_lengthfunction ?
+    camera_arm->set_rotation(rot2);
+    synced_camera_arm_rotation_x = rot2.x;
     
     Vector3 tmprot;
     tmprot.y = rotation.y - rot.y;
@@ -94,7 +91,7 @@ void Player::_physics_process(float delta) {
     }
 
     //Handle Jump.
-    if (inputs->get_jump() == true) {
+    if (inputs->get_jump() == true && is_on_floor() == true) {
         Vector3 vel = get_motion_velocity();
         vel.y = jump_force;
         set_motion_velocity(vel);
@@ -109,10 +106,15 @@ void Player::_physics_process(float delta) {
     Basis direction = (get_transform().basis * Vector3(inputs->get_motion().y, 0, inputs->get_motion().x)).orthonormalized();
     //TODO
     //var direction := (transform.basis * Vector3($Inputs.motion.y, 0, $Inputs.motion.x)).normalized()
-    if (direction != Basis()) {
+    if (direction != Basis()) { //probably that if doesnt work like expected
         Vector3 tmp_vel = Vector3(direction.get_rotation_quat().x * speed, 0, direction.get_rotation_quat().z * speed);
         set_motion_velocity(tmp_vel);
     }
+//    else {
+//        Vector3 tmp_vel = Vector3(godot::Math::move_toward(get_motion_velocity().x, 0, speed), 0, godot::Math::move_toward(get_motion_velocity().z, 0, speed));
+//        set_motion_velocity(tmp_vel);
+//    }
+
     //if direction:
     //    velocity.x = direction.x * speed
     //    velocity.z = direction.z * speed

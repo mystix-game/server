@@ -32,7 +32,6 @@ private:
     float jump_force = 4.5;
     float mouse_sensitivity = 2;
     float speed = 5.0;
-    //SpringArm3D * camera_arm = get_node<SpringArm3D>(NodePath("CameraArm"));
 public:
 
     Player();
