@@ -3,12 +3,15 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <inputs.h>
+
 using namespace godot;
 
 void Player::_bind_methods()
 {
     //ClassDB::bind_method(D_METHOD("_ready"), &Player::_ready);
     ClassDB::bind_method(D_METHOD("_pysics_process"), &Player::_physics_process);
+
+    ClassDB::bind_method(D_METHOD("damage"), &Player::damage);
 
     //gdscript @export equivalent
     ClassDB::bind_method(D_METHOD("get_synced_position"), &Player::get_synced_position);
@@ -54,29 +57,24 @@ void Player::_ready() {
 
 void Player::_physics_process(float delta) {
 
-    //TODO:
-    //Camera3D * camera = get_node<Camera3D>(NodePath("/CameraArm/Camera3D"));
-    //if multiplayer.multiplayer_peer == null or str(multiplayer.get_unique_id()) == str(name):
-    //camera.current = true
-
     SpringArm3D * camera_arm = get_node<SpringArm3D>(NodePath("CameraArm")); //why doesnt this line work in constructor or _ready()??
     Inputs * inputs = get_node<Inputs>(NodePath("Inputs"));
-    synced_position = get_position();
-    Vector3 rotation = get_rotation();
-    synced_rotation_y = rotation.y;
-    
-    Vector3 rot = Vector3(inputs->get_mouse_motion().y, inputs->get_mouse_motion().x, 0) * mouse_sensitivity * delta;
-    inputs->set_mouse_motion(Vector2());
 
+    Vector3 rot = Vector3(inputs->get_mouse_motion().y, inputs->get_mouse_motion().x, 0) * mouse_sensitivity * delta;
+    //inputs->set_mouse_motion(Vector2());
+
+    //rotation x
     Vector3 arm_rot = camera_arm->get_rotation();
     arm_rot.x = arm_rot.x - rot.x;
     //TODO: $CameraArm.rotation.x = clamp(rotation.x, -90.0, 30.0) #TODO: limit camera rotation up/down, new Vector3.limit_lengthfunction ?
     camera_arm->set_rotation(arm_rot);
     synced_camera_arm_rotation_x = arm_rot.x;
     
-    Vector3 player_rot;
-    player_rot.y = rotation.y - rot.y;
+    //rotation y
+    Vector3 player_rot = get_rotation();
+    player_rot.y = player_rot.y - rot.y;
     set_rotation(player_rot);
+    synced_rotation_y = player_rot.y;
 
     // Add the gravity.
     if(is_on_floor() == false)
@@ -100,9 +98,10 @@ void Player::_physics_process(float delta) {
     //if $Inputs.shoot == true:
     //    get_node("../../Bullets").spawn([$"Position3D".global_transform.origin, str(name).to_int()])
 
-    Basis direction = (get_transform().basis * Vector3(inputs->get_motion().y, 0, inputs->get_motion().x)).orthonormalized();
+    //Something is wrong player movement doesnt take rotation
+    Basis direction = (get_transform().get_basis() * Vector3(inputs->get_motion().y, 0, inputs->get_motion().x));
     if (direction != Basis()) {
-        Vector3 vel = Vector3(direction.get_rotation_quat().x * speed, 0, direction.get_rotation_quat().z * speed);
+        Vector3 vel = Vector3(direction.get_rotation().x * speed, 0, direction.get_rotation().z * speed);
         set_motion_velocity(Vector3(vel.x, get_motion_velocity().y, vel.z));
     }
     else {
@@ -111,6 +110,12 @@ void Player::_physics_process(float delta) {
     }
 
     move_and_slide();
+    synced_position = get_position();
+}
+
+void Player::damage(int dmg) {
+    synced_health = synced_health - dmg;
+    UtilityFunctions::print("Health: ", synced_health);
 }
 
 Vector3 Player::get_synced_position() { return synced_position; }

@@ -8,7 +8,6 @@
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/core/binder_common.hpp>
 #include <godot_cpp/classes/spring_arm3d.hpp>
-#include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/node.hpp>
 
 using namespace godot;
@@ -39,6 +38,8 @@ public:
 
     void _ready();
     void _physics_process(float delta);
+
+    void damage(int dmg);
 
     Vector3 get_synced_position();
     void set_synced_position(Vector3 _synced_position);
