@@ -52,7 +52,6 @@ Player::~Player() {
 
 void Player::_ready() {
     UtilityFunctions::print("_ready()");
-//    SpringArm3D * camera_arm = get_node<SpringArm3D>(NodePath("CameraArm"));
 }
 
 void Player::_physics_process(float delta) {
@@ -98,13 +97,11 @@ void Player::_physics_process(float delta) {
     //if $Inputs.shoot == true:
     //    get_node("../../Bullets").spawn([$"Position3D".global_transform.origin, str(name).to_int()])
 
-    //Something is wrong player movement doesnt take rotation
-
     Vector3 dir = (get_global_transform().get_basis() * Vector3(inputs->get_motion().y, 0, inputs->get_motion().x).normalized()).get_euler_xzy();
     //UtilityFunctions::print("direction:", direction);
 
     if (dir != Vector3()) {
-        Vector3 vel = (dir * speed);//probably that get_rotation is wrong
+        Vector3 vel = (dir * speed);
         set_motion_velocity(Vector3(vel.x, get_motion_velocity().y, vel.z));
     }
     else {
