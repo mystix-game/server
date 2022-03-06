@@ -94,11 +94,11 @@ void Server::spawn_player(int id)
             //Set authority to client for Inputs
             player->get_node_internal(NodePath("Inputs"))->set_multiplayer_authority(id);
 
-//            Camera3D * camera = player->get_node<Camera3D>(NodePath("CameraArm/Camera3D"));
-//            Ref<MultiplayerAPI> multiplayer = get_multiplayer();
-//            if(multiplayer->get_multiplayer_peer() == NULL || String::num(multiplayer->get_unique_id()) == player->get_name()) {
-//                camera->set_current(true);
-//            }
+            Camera3D * camera = player->get_node<Camera3D>(NodePath("CameraArm/Camera3D"));
+            Ref<MultiplayerAPI> multiplayer = get_multiplayer();
+            if(multiplayer->get_multiplayer_peer() == NULL || String::num(multiplayer->get_unique_id()) == player->get_name()) {
+                camera->set_current(true);
+            }
 
             players->add_child(player);
         }
