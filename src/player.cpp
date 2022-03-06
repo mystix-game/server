@@ -61,7 +61,7 @@ void Player::_physics_process(float delta) {
     Inputs * inputs = get_node<Inputs>(NodePath("Inputs"));
 
     Vector3 rot = Vector3(inputs->get_mouse_motion().y, inputs->get_mouse_motion().x, 0) * mouse_sensitivity * delta;
-    //inputs->set_mouse_motion(Vector2());
+    inputs->set_mouse_motion(Vector2());
 
     //rotation x
     Vector3 arm_rot = camera_arm->get_rotation();
@@ -99,9 +99,12 @@ void Player::_physics_process(float delta) {
     //    get_node("../../Bullets").spawn([$"Position3D".global_transform.origin, str(name).to_int()])
 
     //Something is wrong player movement doesnt take rotation
-    Basis direction = (get_transform().get_basis() * Vector3(inputs->get_motion().y, 0, inputs->get_motion().x));
-    if (direction != Basis()) {
-        Vector3 vel = Vector3(direction.get_rotation().x * speed, 0, direction.get_rotation().z * speed);
+
+    Vector3 dir = (get_global_transform().get_basis() * Vector3(inputs->get_motion().y, 0, inputs->get_motion().x).normalized()).get_euler_xzy();
+    //UtilityFunctions::print("direction:", direction);
+
+    if (dir != Vector3()) {
+        Vector3 vel = (dir * speed);//probably that get_rotation is wrong
         set_motion_velocity(Vector3(vel.x, get_motion_velocity().y, vel.z));
     }
     else {
