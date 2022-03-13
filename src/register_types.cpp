@@ -9,6 +9,7 @@
 #include "server.h"
 #include "player.h"
 #include "inputs.h"
+#include "bullet.h"
 
 using namespace godot;
 
@@ -17,6 +18,7 @@ void register_cpp_server_types()
 	ClassDB::register_class<Server>();
 	ClassDB::register_class<Player>();
 	ClassDB::register_class<Inputs>();
+	ClassDB::register_class<Bullet>();
 }
 
 void unregister_cpp_server_types() {}

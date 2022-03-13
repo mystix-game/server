@@ -94,6 +94,9 @@ void Player::_physics_process(float delta) {
 
     //TODO
     //Handle Shoot
+    if (inputs->get_shoot() == true) {
+        UtilityFunctions::print("Todo: handle_shoot");
+    }
     //if $Inputs.shoot == true:
     //    get_node("../../Bullets").spawn([$"Position3D".global_transform.origin, str(name).to_int()])
 
