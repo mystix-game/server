@@ -3,13 +3,6 @@ This is a Godot 4 alpha authoritative server written in c++
 
 ## Get started
 
-### Download Godot alpha 4.0.2
-Works atm with version alpha 4.0.2.
-Alpha 4.0.3 changes not implemented yet.
-
-https://downloads.tuxfamily.org/godotengine/4.0/alpha2/
-
-<!--
 ### Download and build Godot 4 master branch:
 ```bash
 #Install build dependencies
@@ -25,7 +18,7 @@ scons -j16 platform=linuxbsd
 #Compile godot export tools
 scons -j16 platform=x11 tools=no target=release_debug bits=64
 ```
--->
+
 ### Download and build server:
 ```bash
 #Download
@@ -39,10 +32,9 @@ scons platform=linux target=debug generate_bindings=yes -j16
 cd ..
 scons target=debug -j16
 ```
-<!--
+
 ### Start Godot 4:
 godot/bin/godot.linuxbsd.tools.64
--->
 
 ### Import server project:
 server/server/project.godot
