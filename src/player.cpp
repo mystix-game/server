@@ -78,16 +78,16 @@ void Player::_physics_process(float delta) {
     // Add the gravity.
     if(is_on_floor() == false)
     {
-        Vector3 vel = get_motion_velocity();
+        Vector3 vel = get_velocity();
         vel.y = vel.y - gravity * delta;
-        set_motion_velocity(vel);
+        set_velocity(vel);
     }
 
     //Handle Jump.
     if (inputs->get_jump() == true && is_on_floor() == true) {
-        Vector3 vel = get_motion_velocity();
+        Vector3 vel = get_velocity();
         vel.y = jump_force;
-        set_motion_velocity(vel);
+        set_velocity(vel);
         synced_mana = synced_mana - 10;
         UtilityFunctions::print("synced_mana: ", synced_mana);
     }
@@ -102,11 +102,11 @@ void Player::_physics_process(float delta) {
 
     if (dir != Vector3()) {
         Vector3 vel = (dir * speed);
-        set_motion_velocity(Vector3(vel.x, get_motion_velocity().y, vel.z));
+        set_velocity(Vector3(vel.x, get_velocity().y, vel.z));
     }
     else {
-        Vector3 vel = Vector3(godot::Math::move_toward(get_motion_velocity().x, 0, speed), 0, godot::Math::move_toward(get_motion_velocity().z, 0, speed));
-        set_motion_velocity(Vector3(vel.x, get_motion_velocity().y, vel.z));
+        Vector3 vel = Vector3(godot::Math::move_toward(get_velocity().x, 0, speed), 0, godot::Math::move_toward(get_velocity().z, 0, speed));
+        set_velocity(Vector3(vel.x, get_velocity().y, vel.z));
     }
 
     move_and_slide();
