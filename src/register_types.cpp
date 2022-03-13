@@ -10,6 +10,7 @@
 #include "player.h"
 #include "inputs.h"
 #include "bullet.h"
+#include "bullet_spawner.h"
 
 using namespace godot;
 
@@ -19,6 +20,7 @@ void register_cpp_server_types()
 	ClassDB::register_class<Player>();
 	ClassDB::register_class<Inputs>();
 	ClassDB::register_class<Bullet>();
+	ClassDB::register_class<BulletSpawner>();
 }
 
 void unregister_cpp_server_types() {}

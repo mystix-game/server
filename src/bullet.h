@@ -5,16 +5,14 @@
 #include <windows.h>
 #endif
 
-#include <godot_cpp/classes/character_body3d.hpp>
+#include <godot_cpp/classes/rigid_dynamic_body3d.hpp>
 #include <godot_cpp/core/binder_common.hpp>
-#include <godot_cpp/classes/spring_arm3d.hpp>
-#include <godot_cpp/classes/node.hpp>
 
 using namespace godot;
 
-class Bullet : public CharacterBody3D
+class Bullet : public RigidDynamicBody3D
 {
-    GDCLASS(Bullet, CharacterBody3D);
+    GDCLASS(Bullet, RigidDynamicBody3D);
 
 protected:
     static void _bind_methods();
@@ -37,4 +35,4 @@ public:
 
 };
 
-#endif //SERVER_PLAYER_H
+#endif //SERVER_BULLET_H
