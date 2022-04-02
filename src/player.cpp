@@ -2,6 +2,8 @@
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
+#include <godot_cpp/classes/position3d.hpp>
+#include <string>
 #include <inputs.h>
 
 using namespace godot;
@@ -96,6 +98,13 @@ void Player::_physics_process(float delta) {
     //Handle Shoot
     if (inputs->get_shoot() == true) {
         UtilityFunctions::print("Todo: handle_shoot");
+        BulletSpawner *bullets = get_node<BulletSpawner>(NodePath("../../Bullets"));
+        
+        Dictionary bullet_data;
+        bullet_data["position"] = get_node<Position3D>(NodePath("Position3D"))->get_global_transform().origin;
+        bullet_data["name"] = String(get_name()).to_int();
+
+        bullets->spawn(bullet_data);
     }
     //if $Inputs.shoot == true:
     //    get_node("../../Bullets").spawn([$"Position3D".global_transform.origin, str(name).to_int()])

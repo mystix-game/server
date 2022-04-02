@@ -15,6 +15,9 @@ void Bullet::_bind_methods()
     ClassDB::bind_method(D_METHOD("get_position"), &Bullet::get_position);
     ClassDB::bind_method(D_METHOD("set_position", "position"),  &Bullet::set_position);
     ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "position"), "set_position", "get_position");
+
+    ClassDB::bind_method(D_METHOD("get_from_player"), &Bullet::get_from_player);
+    ClassDB::bind_method(D_METHOD("set_from_player", "from_player"),  &Bullet::set_from_player);
 }
 
 Bullet::Bullet() {
@@ -39,3 +42,6 @@ void Bullet::on_body_entered() {
 
 Vector3 Bullet::get_position() { return position; }
 void Bullet::set_position(Vector3 _position) { position = _position; }
+
+int Bullet::get_from_player() { return from_player; }
+void Bullet::set_from_player(int _from_player) { from_player = _from_player; }

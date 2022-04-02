@@ -19,6 +19,7 @@ protected:
 
 private:
     Vector3 position;
+    int from_player;
 
 public:
 
@@ -33,6 +34,8 @@ public:
     Vector3 get_position();
     void set_position(Vector3 _position);
 
+    int get_from_player();
+    void set_from_player(int _from_player);
 };
 
 #endif //SERVER_BULLET_H

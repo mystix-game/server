@@ -9,6 +9,7 @@
 #include <godot_cpp/core/binder_common.hpp>
 #include <godot_cpp/classes/spring_arm3d.hpp>
 #include <godot_cpp/classes/node.hpp>
+#include <bullet_spawner.h>
 
 using namespace godot;
 
@@ -31,6 +32,7 @@ private:
     float jump_force = 4.5;
     float mouse_sensitivity = 2;
     float speed = 10;
+
 public:
 
     Player();

@@ -7,6 +7,7 @@
 
 #include <godot_cpp/classes/multiplayer_spawner.hpp>
 #include <godot_cpp/core/binder_common.hpp>
+#include <bullet.h>
 
 using namespace godot;
 
@@ -27,6 +28,7 @@ public:
 
     void _ready();
 
+    Object *_spawn_custom(Variant data);
 };
 
 #endif //SERVER_BULLET_SPAWNER_H

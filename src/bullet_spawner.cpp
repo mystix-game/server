@@ -2,6 +2,8 @@
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
+#include <godot_cpp/classes/packed_scene.hpp>
 
 using namespace godot;
 
@@ -20,6 +22,22 @@ BulletSpawner::~BulletSpawner() {
 
 void BulletSpawner::_ready() {
     UtilityFunctions::print("BulletSpawner_ready()");
+}
+
+Object *BulletSpawner::_spawn_custom(Variant data) {
+    UtilityFunctions::print("hello this is bullet spawner");
+
+    ResourceLoader *loader = ResourceLoader::get_singleton();
+    Ref<PackedScene> res = loader->load(NodePath("bullet.tscn"));
+    if (res == NULL) {
+        return nullptr;
+    }
+
+    Bullet *bullet = cast_to<Bullet>(res->instantiate());    
+    bullet->set_position(data.get("position"));
+    bullet->set_from_player(data.get("name"));
+
+    return bullet;
 }
 
 //TODO:
