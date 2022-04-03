@@ -5,3 +5,4 @@ entry_symbol = "server_library_init"
 [libraries]
 
 linux.64.debug = "bin/libserver.linux.debug.64.so"
+macos.debug = "bin/osx/libserver.osx.debug.universal"
