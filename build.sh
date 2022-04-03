@@ -14,4 +14,5 @@ fi
 
 scons target=debug "$BUILD_J"
 
-$GODOT_EXECUTABLE --debug --headless --path ./server
+#$GODOT_EXECUTABLE --debug --headless --path ./server
+$GODOT_EXECUTABLE --path ./server
