@@ -30,18 +30,55 @@ Bullet::~Bullet() {
 
 void Bullet::_ready() {
     UtilityFunctions::print("bullet_ready()");
+
+    player_path = "../../Players/" + String::num(from_player) + "/";
+    //TODO
+    //camera = get_node<Camera3D>(NodePath(player_path + "CameraArm/Camera3D"));
+    //crosshair_position = Vector2();
+    //ray_from = Vector3();
+    //ray_dir = Vector3();
+
+    //old gdscript way
+    //@onready var player := get_node("../../Players/" + str(from_player))
+    //@onready var camera := player.get_node("CameraArm/Camera3D")
+    //@onready var ch_pos : Vector2 = player.get_node("Crosshair").position + player.get_node("Crosshair").size * 0.5
+    //@onready var ray_from = player.get_node("Position3D/").global_transform.origin
+    //@onready var ray_dir : Vector3 = camera.project_ray_normal(ch_pos)
+
+
+    UtilityFunctions::print("camera_path: " + player_path + "CameraArm/Camera3D");
+
+    //self.add_collision_exception_with(player)
 }
 
 void Bullet::_physics_process(float delta) {
     //Todo
-    //move_and_collide(Vector3(1,1,1));
+
+    //Destroy bullet after 5 sec
+    time_alive -= delta;
+    if (time_alive <= 0) {
+        queue_free();
+    }
+
+    //Ref<KinematicCollision3D> col = move_and_collide(delta * ray_dir * bullet_velocity);
+    //if (col->get_collision_count() > 0) {
+    //    UtilityFunctions::print("Collision detected");
+
+        //TODO
+        //if (col.get_collider() and col.get_collider().has_method("damage")):
+		//    col.collider.damage(damage)
+		//$CollisionShape3D.disabled=true
+
+    //    queue_free();
+    //}
+
 
     set_synced_position(get_position());
         //UtilityFunctions::print("synced_position: ", get_synced_position());
 }
 
 void Bullet::on_body_entered() {
-
+    UtilityFunctions::print("Collided with a body");
 }
 
 Vector3 Bullet::get_synced_position() { return synced_position; }

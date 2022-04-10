@@ -21,6 +21,16 @@ private:
     Vector3 synced_position;
     int from_player;
 
+    float time_alive = 5.0;
+    float bullet_velocity;
+    int damage;
+
+    String player_path;
+    Camera3D * camera;
+    Vector2 crosshair_position;
+    Vector3 ray_from;
+    Vector3 ray_dir;
+
 public:
 
     Bullet();
