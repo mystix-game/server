@@ -7,7 +7,6 @@
 
 #include <godot_cpp/classes/multiplayer_spawner.hpp>
 #include <godot_cpp/core/binder_common.hpp>
-#include <bullet.h>
 
 using namespace godot;
 
@@ -19,7 +18,6 @@ protected:
     static void _bind_methods();
 
 private:
-    Vector3 position;
 
 public:
 

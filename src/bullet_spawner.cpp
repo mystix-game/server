@@ -4,6 +4,7 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
+#include <bullet.h>
 
 using namespace godot;
 
@@ -33,9 +34,10 @@ Object *BulletSpawner::_spawn_custom(Variant data) {
         return nullptr;
     }
 
-    Bullet *bullet = cast_to<Bullet>(res->instantiate());    
-    bullet->set_position(data.get("position"));
+    Bullet *bullet = cast_to<Bullet>(res->instantiate());
+    bullet->set_position(data.get("synced_position"));
     bullet->set_from_player(data.get("name"));
+    bullet->set_multiplayer_authority(int(0));
 
     return bullet;
 }

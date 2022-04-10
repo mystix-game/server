@@ -18,7 +18,7 @@ protected:
     static void _bind_methods();
 
 private:
-    Vector3 position;
+    Vector3 synced_position;
     int from_player;
 
 public:
@@ -31,8 +31,8 @@ public:
 
     void on_body_entered();
 
-    Vector3 get_position();
-    void set_position(Vector3 _position);
+    Vector3 get_synced_position();
+    void set_synced_position(Vector3 _synced_position);
 
     int get_from_player();
     void set_from_player(int _from_player);

@@ -101,7 +101,7 @@ void Player::_physics_process(float delta) {
         BulletSpawner *bullets = get_node<BulletSpawner>(NodePath("../../Bullets"));
         
         Dictionary bullet_data;
-        bullet_data["position"] = get_node<Position3D>(NodePath("Position3D"))->get_global_transform().origin;
+        bullet_data["synced_position"] = get_node<Position3D>(NodePath("Position3D"))->get_global_transform().origin;
         bullet_data["name"] = String(get_name()).to_int();
 
         bullets->spawn(bullet_data);
