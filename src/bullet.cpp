@@ -67,12 +67,11 @@ void Bullet::_physics_process(float delta) {
     //if (col->get_collision_count() > 0) {
     //    UtilityFunctions::print("Collision detected");
 
-        //TODO
-        //if (col.get_collider() and col.get_collider().has_method("damage")):
-		//    col.collider.damage(damage)
-		//$CollisionShape3D.disabled=true
-
-    //    queue_free();
+    //TODO
+    //  if (col.get_collider() and col.get_collider().has_method("damage")):
+	//      col.collider.damage(damage)
+	//      $CollisionShape3D.disabled=true
+    //      queue_free();
     //}
 
     set_synced_position(get_position());
