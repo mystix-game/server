@@ -2,6 +2,7 @@
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
+#include <godot_cpp/classes/texture_rect.hpp>
 
 using namespace godot;
 
@@ -34,9 +35,12 @@ void Bullet::_ready() {
     player_path = "../../Players/" + String::num(from_player) + "/";
     //TODO
     //camera = get_node<Camera3D>(NodePath(player_path + "CameraArm/Camera3D"));
-    //crosshair_position = Vector2();
+    crosshair_position = get_node<TextureRect>(NodePath("player_path + Crosshair"))->get_position() + get_node<TextureRect>(NodePath("player_path + Crosshair"))->get_size() * 0.5;
     //ray_from = Vector3();
-    //ray_dir = Vector3();
+    bullet_velocity = 10.0f;
+    ray_dir = Vector3(1,1,1);
+    //TODO: this line doesnt work:
+    //ray_dir = camera->project_ray_normal(crosshair_position);
 
     //old gdscript way
     //@onready var player := get_node("../../Players/" + str(from_player))
@@ -45,21 +49,20 @@ void Bullet::_ready() {
     //@onready var ray_from = player.get_node("Position3D/").global_transform.origin
     //@onready var ray_dir : Vector3 = camera.project_ray_normal(ch_pos)
 
-
     UtilityFunctions::print("camera_path: " + player_path + "CameraArm/Camera3D");
 
     //self.add_collision_exception_with(player)
 }
 
 void Bullet::_physics_process(float delta) {
-    //Todo
 
     //Destroy bullet after 5 sec
     time_alive -= delta;
     if (time_alive <= 0) {
         queue_free();
     }
-
+    
+    //TODO: This line doesnt work:
     //Ref<KinematicCollision3D> col = move_and_collide(delta * ray_dir * bullet_velocity);
     //if (col->get_collision_count() > 0) {
     //    UtilityFunctions::print("Collision detected");
@@ -72,9 +75,8 @@ void Bullet::_physics_process(float delta) {
     //    queue_free();
     //}
 
-
     set_synced_position(get_position());
-        //UtilityFunctions::print("synced_position: ", get_synced_position());
+    //UtilityFunctions::print("synced_position: ", get_synced_position());
 }
 
 void Bullet::on_body_entered() {
