@@ -40,5 +40,7 @@ godot/bin/godot.linuxbsd.tools.64
 server/server/project.godot
 
 ### Gdscript Client until c++ version is ready:
-https://github.com/MystixCode/Godot4Net
+https://github.com/MystixCode/Godot4Net/tree/old_main_without_states
+
+use the "old_main_without_states" branch
 
